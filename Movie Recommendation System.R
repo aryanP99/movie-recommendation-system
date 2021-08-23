@@ -1,15 +1,16 @@
 rm(list = ls())
 library(recommenderlab)
+library(ggplot2)
 library(data.table)
 library(writexl)
 library(reshape2)
 library("xlsx")
-setwd("C:/Users/khare/code/Self Project/Movie Recommendation System") 
-movie_data <- read.csv("C:/Users/khare/code/Self Project/Movie Recommendation System/Raw Data/movies.csv",stringsAsFactors=FALSE)
-rating_data <- read.csv("C:/Users/khare/code/Self Project/Movie Recommendation System/Raw Data/ratings.csv")
+setwd("C:/Users/Aryan/Documents/Projects/Movie Recommendation System")
+movie_data <- read.csv("C:/Users/Aryan/Documents/Projects/Movie Recommendation System/Raw Data/movies.csv",stringsAsFactors=FALSE)
+rating_data <- read.csv("C:/Users/Aryan/Documents/Projects/Movie Recommendation System/Raw Data/ratings.csv")
 str(movie_data)
 movie_data
-summary(movie_data)    #Author DataFlair
+summary(movie_data)
 head(movie_data)
 summary(rating_data)
 head(rating_data)
@@ -17,7 +18,7 @@ movie_genre <- as.data.frame(movie_data$genres, stringsAsFactors=FALSE)
 library(data.table)
 movie_genre2 <- as.data.frame(tstrsplit(movie_genre[,1], '[|]', 
                                         type.convert=TRUE), 
-                              stringsAsFactors=FALSE) #DataFlair
+                              stringsAsFactors=FALSE)
 colnames(movie_genre2) <- c(1:10)
 
 list_genre <- c("Action", "Adventure", "Animation", "Children", 
@@ -30,7 +31,7 @@ colnames(genre_mat1) <- list_genre
 
 for (index in 1:nrow(movie_genre2)) {
   for (col in 1:ncol(movie_genre2)) {
-    gen_col = which(genre_mat1[1,] == movie_genre2[index,col]) #Author DataFlair
+    gen_col = which(genre_mat1[1,] == movie_genre2[index,col])
     genre_mat1[index+1,gen_col] <- 1
   }
 }
@@ -40,7 +41,7 @@ for (col in 1:ncol(genre_mat2)) {
 } 
 str(genre_mat2)
 SearchMatrix <- cbind(movie_data[,1:2], genre_mat2[])
-head(SearchMatrix)    #DataFlair
+head(SearchMatrix)
 ratingMatrix <- dcast(rating_data, userId~movieId, value.var = "rating", na.rm=FALSE)
 ratingMatrix <- as.matrix(ratingMatrix[,-1]) #remove userIds
 #Convert rating matrix into a recommenderlab sparse matrix
