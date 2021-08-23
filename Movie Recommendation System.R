@@ -1,11 +1,10 @@
 rm(list = ls())
 library(recommenderlab)
-library(ggplot2)                       #Author DataFlair
 library(data.table)
 library(writexl)
 library(reshape2)
 library("xlsx")
-setwd("C:/Users/khare/code/Self Project/Movie Recommendation System")                       #Author DataFlair
+setwd("C:/Users/khare/code/Self Project/Movie Recommendation System") 
 movie_data <- read.csv("C:/Users/khare/code/Self Project/Movie Recommendation System/Raw Data/movies.csv",stringsAsFactors=FALSE)
 rating_data <- read.csv("C:/Users/khare/code/Self Project/Movie Recommendation System/Raw Data/ratings.csv")
 str(movie_data)
